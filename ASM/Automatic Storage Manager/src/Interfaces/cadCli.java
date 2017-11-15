@@ -401,9 +401,9 @@ public class cadCli extends javax.swing.JFrame {
         
         
         try {
-            if (cx_nome.getText().equals("") || cx_cpf_cnpj.getText().equals("------") || cx_endereco.getText().equals("") || cx_bairro.getText().equals("") || cx_cidade.getText().equals("") || cx_cep.getText().equals("") || cx_telefone1.getText().equals("") || cx_telefone2.getText().equals("") || cx_email.getText().equals("") || cx_estado.getSelectedItem().toString().equals("------")) {
+            if (cx_nome.getText().equals("") || cx_tipo.getSelectedItem().toString().equals("------") || cx_endereco.getText().equals("") || cx_bairro.getText().equals("") || cx_cidade.getText().equals("") || cx_cep.getText().equals("") || cx_telefone1.getText().equals("") || cx_telefone2.getText().equals("") || cx_email.getText().equals("") || cx_estado.getSelectedItem().toString().equals("------")) {
                 throw new Exception();
-            } else /*if (cx_cpf_cnpj.getSelectedText().equals("Jurídica"))*/ {
+            } else if (cx_tipo.getSelectedItem().toString().equals("Jurídica")) {
                 ju.setNome(cx_nome.getText());
                 ju.setEndereco(cx_endereco.getText());
                 ju.setBairro(cx_bairro.getText());
@@ -415,21 +415,10 @@ public class cadCli extends javax.swing.JFrame {
                 ju.setEmail(cx_email.getText());
                 //ju.setDescricao(cx11.getText());
                 ju.setCnpj(cx_cpf_cnpj.getText());
-                //tipo = 1;
+                tipo = 1;
                 
-                pf.setNome(cx_nome.getText());
-                pf.setEndereco(cx_endereco.getText());
-                pf.setBairro(cx_bairro.getText());
-                pf.setCidade(cx_cidade.getText());
-                pf.setEstado(cx_estado.getSelectedItem().toString());
-                pf.setCep(cx_cep.getText());
-                pf.setTelefone1(cx_telefone1.getText());
-                pf.setTelefone2(cx_telefone2.getText());
-                pf.setEmail(cx_email.getText());
-                pf.setCpf(cx_cpf_cnpj.getText());
-                //tipo = 2;
                 
-            /*} else if(cx_cpf_cnpj.getSelectedText().equals("Física")){
+            } else if(cx_tipo.getSelectedItem().toString().equals("Física")){
                 pf.setNome(cx_nome.getText());
                 pf.setEndereco(cx_endereco.getText());
                 pf.setBairro(cx_bairro.getText());
@@ -442,14 +431,14 @@ public class cadCli extends javax.swing.JFrame {
                 //pf.setDescricao(cx11.getText());
                 pf.setCpf(cx_cpf_cnpj.getText());
                 tipo = 2;
-            }*/
+            
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos", "Cadastro de Cliente", JOptionPane.ERROR_MESSAGE);
             c = 2;
         }
-        if (c != 2 && cx_cpf_cnpj.getSelectedText().equals("Jurídica")) {
+        if (c != 2 && tipo==1) {
             sql = "INSERT INTO Pessoa (Tipo, Nome, Endereco, Bairro, Telefone_1, Telefone_2, Cidade, CEP, Estado, Email) VALUES ('C', ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             sql2 = "INSERT INTO Juridica (CNPJ, ID_Pes) VALUES (?, ?);";
 
@@ -502,7 +491,7 @@ public class cadCli extends javax.swing.JFrame {
             }
         }
         
-        if (c != 2 && cx_cpf_cnpj.getSelectedText().equals("Física")) {
+        if (c != 2 && tipo==2) {
             sql = "INSERT INTO Pessoa (Tipo, Nome, Endereco, Bairro, Telefone_1, Telefone_2, Cidade, CEP, Estado, Email) VALUES ('C', ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             sql2 = "INSERT INTO Fisica (CPF, ID_Pes) VALUES (?, ?);";
 
