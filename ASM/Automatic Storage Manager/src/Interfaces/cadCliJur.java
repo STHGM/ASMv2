@@ -411,7 +411,7 @@ public class cadCliJur extends javax.swing.JFrame {
         }
         if (c != 2) {
             sql = "INSERT INTO Pessoa (Tipo, Nome, Endereco, Bairro, Telefone_1, Telefone_2, Cidade, CEP, Estado, Email) VALUES ('C', ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            sql2 = "INSERT INTO Juridica (CNPJ, Descricao, ID_Pes) VALUES (?, ?, ?);";
+            sql2 = "INSERT INTO Juridica (CNPJ, ID_Pes) VALUES (?, ?);";
 
             while (cond != true) {
                 try {
@@ -432,8 +432,8 @@ public class cadCliJur extends javax.swing.JFrame {
                         try {
                             PreparedStatement psd2 = cn.prepareStatement(sql2);
                             psd2.setString(1, ju.getCnpj());
-                            psd2.setString(2, ju.getDescricao());
-                            psd2.setInt(3, getIdB(ju));
+                            //psd2.setString(2, ju.getDescricao());
+                            psd2.setInt(2, getIdB(ju));
 
                             int n2 = psd2.executeUpdate();
 
