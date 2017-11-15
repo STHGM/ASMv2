@@ -5,6 +5,7 @@
  */
 package Interfaces;
 
+import Principal.Fisica;
 import Principal.Juridica;
 import javax.swing.*;
 import java.sql.*;
@@ -38,7 +39,7 @@ public class cadCli extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        label_cpf_cnpj = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -64,7 +65,7 @@ public class cadCli extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        tipo = new javax.swing.JComboBox<>();
+        cx_tipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro do Cliente - Pessoa Jurídica");
@@ -75,8 +76,8 @@ public class cadCli extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel2.setText("Nome: ");
 
-        jLabel4.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jLabel4.setText("C.N.P.J.:");
+        label_cpf_cnpj.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        label_cpf_cnpj.setText("C.N.P.J.:");
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel5.setText("Bairro:");
@@ -200,12 +201,12 @@ public class cadCli extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel16.setText("Tipo de Pessoa:");
 
-        tipo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "------", "Pessoa Física", "Pessoa Jurídica" }));
-        tipo.setSelectedItem("Paraná - PR");
-        tipo.addActionListener(new java.awt.event.ActionListener() {
+        cx_tipo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        cx_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "------", "Física", "Jurídica" }));
+        cx_tipo.setSelectedItem("Paraná - PR");
+        cx_tipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tipoActionPerformed(evt);
+                cx_tipoActionPerformed(evt);
             }
         });
 
@@ -232,7 +233,7 @@ public class cadCli extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel4)
+                                                    .addComponent(label_cpf_cnpj)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                     .addComponent(cx_cpf_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -285,7 +286,7 @@ public class cadCli extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -299,14 +300,14 @@ public class cadCli extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cx_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(label_cpf_cnpj)
                     .addComponent(cx_cpf_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(cx_endereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -392,14 +393,15 @@ public class cadCli extends javax.swing.JFrame {
       MyConnection mc = new MyConnection();
         Connection cn = mc.conexao();
         Juridica ju = new Juridica();
+        Fisica fi = new Fisica();
         boolean cond = false;
         int c = 0;
         String sql = "";
         String sql2 = "";
         try {
-            if (cx_nome.getText().equals("") || cx_cpf_cnpj.getText().equals("") || cx_endereco.getText().equals("") || cx_bairro.getText().equals("") || cx_cidade.getText().equals("") || cx_cep.getText().equals("") || cx_telefone1.getText().equals("") || cx_telefone2.getText().equals("") || cx_email.getText().equals("") || cx_estado.getSelectedItem().toString().equals("------")) {
+            if (cx_nome.getText().equals("") || cx_cpf_cnpj.getText().equals("------") || cx_endereco.getText().equals("") || cx_bairro.getText().equals("") || cx_cidade.getText().equals("") || cx_cep.getText().equals("") || cx_telefone1.getText().equals("") || cx_telefone2.getText().equals("") || cx_email.getText().equals("") || cx_estado.getSelectedItem().toString().equals("------")) {
                 throw new Exception();
-            } else {
+            } else if (cx_cpf_cnpj.equals("Jurídica")) {
                 ju.setNome(cx_nome.getText());
                 ju.setEndereco(cx_endereco.getText());
                 ju.setBairro(cx_bairro.getText());
@@ -411,13 +413,26 @@ public class cadCli extends javax.swing.JFrame {
                 ju.setEmail(cx_email.getText());
                 //ju.setDescricao(cx11.getText());
                 ju.setCnpj(cx_cpf_cnpj.getText());
+                
+                fi.setNome(cx_nome.getText());
+                fi.setEndereco(cx_endereco.getText());
+                fi.setBairro(cx_bairro.getText());
+                fi.setCidade(cx_cidade.getText());
+                fi.setEstado(cx_estado.getSelectedItem().toString());
+                fi.setCep(cx_cep.getText());
+                fi.setTelefone1(cx_telefone1.getText());
+                fi.setTelefone2(cx_telefone2.getText());
+                fi.setEmail(cx_email.getText());
+                //ju.setDescricao(cx11.getText());
+                fi.setCpf(cx_cpf_cnpj.getText());
             }
+            
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos", "Cadastro de Cliente Jurídico", JOptionPane.ERROR_MESSAGE);
             c = 2;
         }
-        if (c != 2) {
+        if (c != 2 && cx_cpf_cnpj.equals("Jurídica")) {
             sql = "INSERT INTO Pessoa (Tipo, Nome, Endereco, Bairro, Telefone_1, Telefone_2, Cidade, CEP, Estado, Email) VALUES ('C', ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             sql2 = "INSERT INTO Juridica (CNPJ, ID_Pes) VALUES (?, ?);";
 
@@ -470,13 +485,90 @@ public class cadCli extends javax.swing.JFrame {
             }
         }
         
+        if (c != 2 && cx_cpf_cnpj.equals("Física")) {
+            sql = "INSERT INTO Pessoa (Tipo, Nome, Endereco, Bairro, Telefone_1, Telefone_2, Cidade, CEP, Estado, Email) VALUES ('C', ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            sql2 = "INSERT INTO Fisica (CPF, ID_Pes) VALUES (?, ?);";
+
+            while (cond != true) {
+                try {
+                    PreparedStatement psd = cn.prepareStatement(sql);
+                    psd.setString(1, fi.getNome());
+                    psd.setString(2, fi.getEndereco());
+                    psd.setString(3, fi.getBairro());
+                    psd.setString(4, fi.getTelefone1());
+                    psd.setString(5, fi.getTelefone2());
+                    psd.setString(6, fi.getCidade());
+                    psd.setString(7, fi.getCep());
+                    psd.setString(8, fi.getEstado());
+                    psd.setString(9, fi.getEmail());
+
+                    int n = psd.executeUpdate();
+                    if (n > 0) {
+
+                        try {
+                            PreparedStatement psd2 = cn.prepareStatement(sql2);
+                            psd2.setString(1, fi.getCpf());
+                            //psd2.setString(2, ju.getDescricao());
+                            psd2.setInt(2, getIdB(ju));
+
+                            int n2 = psd2.executeUpdate();
+
+                            if (n2 > 0) {
+                                JOptionPane.showMessageDialog(null, "Dados salvos com sucesso", "Cadastro de Cliente Físico", JOptionPane.INFORMATION_MESSAGE);
+                                int op = JOptionPane.showConfirmDialog(null, "Deseja cadastrar outro cliente agora?", "Cadastro de Cliente Jurídico", JOptionPane.YES_NO_OPTION);
+                                if (op == 0) {
+                                    cond = true;
+                                    dispose();
+                                    new cadCliJur().setVisible(true);
+
+                                } else {
+                                    dispose();
+                                    cond = true;
+                                }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(cadProd.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(cadProd.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
         
 
     }//GEN-LAST:event_btn_salvarActionPerformed
 
-    private void tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tipoActionPerformed
+    private void cx_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cx_tipoActionPerformed
+        if(evt.getSource() == cx_tipo){
+            JComboBox cb = (JComboBox)evt.getSource();
+            String msg =  (String)cb.getSelectedItem();
+            switch(msg){
+                case "Física": label_cpf_cnpj.setText("CPF");
+                    //JFormattedTextField field = new JFormattedTextField();
+                    {
+                        try {
+                            cx_cpf_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+                        } catch (ParseException ex) {
+                            Logger.getLogger(cadCli.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+                case "Jurídica": label_cpf_cnpj.setText("C.N.P.J.");
+                    {
+                        try {
+                            cx_cpf_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+                        } catch (ParseException ex) {
+                            Logger.getLogger(cadCli.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+            }
+        }
+    }//GEN-LAST:event_cx_tipoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -578,6 +670,7 @@ public class cadCli extends javax.swing.JFrame {
     private javax.swing.JTextField cx_nome;
     private javax.swing.JFormattedTextField cx_telefone1;
     private javax.swing.JFormattedTextField cx_telefone2;
+    private javax.swing.JComboBox<String> cx_tipo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -586,13 +679,12 @@ public class cadCli extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JComboBox<String> tipo;
+    private javax.swing.JLabel label_cpf_cnpj;
     // End of variables declaration//GEN-END:variables
 }

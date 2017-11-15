@@ -39,7 +39,6 @@ ENGINE = InnoDB;
 -- Table mydb.Física
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Fisica (
-  dataNasc varchar(10) NOT NULL,
   CPF VARCHAR(14) NULL,
   ID_Pes INT NOT NULL ,
   INDEX fk_Física_Pessoa_idx (ID_Pes ASC),
@@ -125,3 +124,6 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+alter table fisica
+drop column dataNasc;

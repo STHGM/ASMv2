@@ -17,7 +17,7 @@ public class MyConnection {
     public Connection conexao(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/asm", "root", "utfpr");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/asm", "root", "1r2m3g");
             //JOptionPane.showMessageDialog(null, "Conectado com sucesso", "Confirmação de Conexão", JOptionPane.INFORMATION_MESSAGE);
         }
         catch (Exception e){
