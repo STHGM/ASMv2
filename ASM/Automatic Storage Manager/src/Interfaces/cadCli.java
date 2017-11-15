@@ -355,6 +355,7 @@ public class cadCli extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cx_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cx_emailActionPerformed
