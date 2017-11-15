@@ -103,7 +103,7 @@ public class inicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botForActionPerformed
-        new opcFor().setVisible(true);
+        new cadFor().setVisible(true);
     }//GEN-LAST:event_botForActionPerformed
 
     private void botProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botProdActionPerformed
