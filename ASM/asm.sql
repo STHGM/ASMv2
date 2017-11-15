@@ -56,7 +56,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS Juridica (
   CNPJ VARCHAR(18) NOT NULL,
-  Descricao VARCHAR(150) NULL,
   ID_Pes INT NOT NULL,
   INDEX fk_Juridica_Pessoa1_idx (ID_Pes ASC),
   CONSTRAINT fk_Juridica_Pessoa1
